@@ -50,18 +50,12 @@ public class Account {
 	Connection conn = null;
 	Scanner scanner;
 	
-	
 	Account()throws ClassNotFoundException,SQLException {
 		AccountDetails = new ArrayList<AccountDetail>();
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sakila", "root", "admin@123");
 		scanner = new Scanner(System.in);
 		
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		conn.close();
 	}
 	
 		void getAccountDetailsFromDatabase() throws SQLException {
@@ -91,7 +85,7 @@ public class Account {
 			String account_number = null;
 			String C_name = null;
 			String type = null;
-			double balance=0.0;
+			double balance=0.0f;
 			System.out.println("Please enter the Account Number");
 			account_number = scanner.nextLine();
 			System.out.println("Please enter the Customer Name");
@@ -129,54 +123,16 @@ void DeleteAccountDetailsInDatabase(AccountDetail accd) throws SQLException {
 	String account_number = null;
 	System.out.println("Please enter the Account Number");
 	account_number = scanner.nextLine();
-	//AccountDetail accd = new AccountDetail();
-	accd.setAccount_number(account_number);
-	PreparedStatement st = conn.prepareStatement("delete from AccountDetails where account_number =?");
-	st.setString(1, accd.getAccount_number());
+		 PreparedStatement st = conn.prepareStatement("delete from AccountDetails where account_number =?");
+			st.setString(1, accd.getAccount_number());
 			//st.setString(2,accd.getC_name());
 			//st.setString(3,accd.getType());
 			//st.setDouble(4,accd.getBalance());
 			int result = st.executeUpdate();
 			System.out.println("Data Deleted");
-			
 		 
 			
 		}
-
-void PrintMenu() {
-	int userChoice=0;
-	//int menu;
-	do {
-	System.out.println("Menu");
-	System.out.println("1. Cash Deposit");
-	System.out.println("2. Fund Transfer");
-	System.out.println("3. Transaction Detail");
-	System.out.println("4. Exit");
-	//boolean quit = false;
-	userChoice  = scanner.nextInt();
-	switch (userChoice ) {
-		
-			case 1:
-				
-			break;
-
-		case 2:
-			fundTransfer();
-			break;
-
-		case 3:
-			transactionDetails();
-			break;
-
-		case 4:
-			quit = true;
-			System.out.println("exited");
-			break;
-		}
-	} while (!quit);
-
-
-}
 	 
 	 
 
